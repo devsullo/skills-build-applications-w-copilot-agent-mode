@@ -6,13 +6,18 @@ const Users = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const baseUrl = process.env.REACT_APP_CODESPACE_NAME
-    ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`
-    : 'http://localhost:8000/api';
-  const endpoint = `${baseUrl}/users/`;
+  const getApiBaseUrl = () => {
+    const codespaceName = process.env.REACT_APP_CODESPACE_NAME;
+    return codespaceName
+      ? `https://${codespaceName}-8000.app.github.dev/api`
+      : 'http://localhost:8000/api';
+  };
+
+  const endpoint = `${getApiBaseUrl()}/users/`;
+  console.log('[Users] Using endpoint:', endpoint);
 
   const fetchData = useCallback(() => {
-    console.log('[Users] Fetch endpoint:', endpoint);
+    console.log('[Users] Fetching data from:', endpoint);
 
     fetch(endpoint)
       .then((response) => {
@@ -22,12 +27,12 @@ const Users = () => {
         return response.json();
       })
       .then((data) => {
-        console.log('[Users] Fetched data:', data);
         const results = Array.isArray(data)
           ? data
           : Array.isArray(data?.results)
           ? data.results
           : [];
+        console.log('[Users] Fetched data:', data, 'Resolved items:', results);
         setItems(results);
       })
       .catch((fetchError) => {

@@ -13,7 +13,8 @@ function App() {
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
           <div className="container-fluid">
-            <NavLink className="navbar-brand" to="/">
+            <NavLink className="navbar-brand d-flex align-items-center" to="/">
+              <img src="/octofitapp-small.svg" className="brand-logo me-2" alt="OctoFit Logo" />
               OctoFit Tracker
             </NavLink>
             <button
@@ -85,6 +86,7 @@ function App() {
             <Route path="/teams" element={<Teams />} />
             <Route path="/users" element={<Users />} />
             <Route path="/workouts" element={<Workouts />} />
+            <Route path="*" element={<Activities />} />
           </Routes>
         </main>
       </div>
